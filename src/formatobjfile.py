@@ -1,11 +1,10 @@
-from formatcarray12 import FILE_NAME
 import math
 from statistics import mean
 
-# FILE_NAMES = ["Realistic_White_Male_Low_Poly.obj", "Eye_Mesh_Low_Poly.obj", "Left_Eye_Mesh_Low_Poly.obj", "Right_Eye_Mesh_Low_Poly.obj", "Teeth_Mesh_Low_Poly.obj", "Lower_Teeth_Mesh_Low_Poly.obj", "Upper_Teeth_Mesh_Low_Poly.obj"]
-FILE_NAMES = ["male.obj"]
-# FILE_DIRECTORY = "/Users/nazimaniltepe/Documents/3D Models/Realistic_White_Male_Low_Poly/"
-FILE_DIRECTORY = "/Users/nazimaniltepe/Documents/Projects/PythonScripts/obj/"
+FILE_NAMES = ["Realistic_White_Male_Low_Poly.obj", "Left_Eye_Mesh_Low_Poly.obj", "Right_Eye_Mesh_Low_Poly.obj", "Lower_Teeth_Mesh_Low_Poly.obj", "Upper_Teeth_Mesh_Low_Poly.obj"]
+# FILE_NAMES = ["male.obj"]
+FILE_DIRECTORY = "/Users/nazimaniltepe/Documents/3D Models/Realistic_White_Male_Low_Poly/"
+# FILE_DIRECTORY = "/Users/nazimaniltepe/Documents/Projects/PythonScripts/obj/"
 MAX_Y_FOR_SCALE = 1.8
 
 class vector:
@@ -198,5 +197,8 @@ def exportTxtFromModel(mdl):
     
 # exportObjFromModel(models[0])
 # exportTxtFromModel(models[0])
+
+for m in models:
+    exportTxtFromModel(m)
 
 

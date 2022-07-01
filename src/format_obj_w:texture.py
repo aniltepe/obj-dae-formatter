@@ -66,10 +66,10 @@ for file in FILE_NAMES:
     
 
 centerIndice = -1
-testV = "-0.033873 1.68546 0.110758"
+testVert = "-0.033873 1.68546 0.110758"
 for i in range(len(new_model.vertices)):
     v = new_model.vertices[i]
-    if abs(v.position.x - float(testV.split(" ")[0])) < 0.00001 and abs(v.position.y - float(testV.split(" ")[1])) < 0.00001 and abs(v.position.z - float(testV.split(" ")[2])) < 0.00001:
+    if abs(v.position.x - float(testVert.split(" ")[0])) < 0.00001 and abs(v.position.y - float(testVert.split(" ")[1])) < 0.00001 and abs(v.position.z - float(testVert.split(" ")[2])) < 0.00001:
         centerIndice = i
 
 print("vertice #" + str(centerIndice) + ":", new_model.vertices[centerIndice].position.x, new_model.vertices[centerIndice].position.y, new_model.vertices[centerIndice].position.z)
