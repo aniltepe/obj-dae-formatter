@@ -47,6 +47,7 @@ for i_idx in range(0, len(vertices), 3):
     i = int(i_idx / 3)
     included_tri_idx = [int(t / 3) for t in range(0, len(faces), 3) if faces[t] == i or faces[t + 1] == i or faces[t + 2] == i]
     total += len(included_tri_idx)
+    included_tri_nor_sum = vector(0.0, 0.0, 0.0)
     print("Vertex No. ", i, " is part of ", len(included_tri_idx), " triangles, total count: ", total)
     for j in range(len(included_tri_idx)):
         triidx = included_tri_idx[j] * 3
@@ -89,7 +90,7 @@ for i_idx in range(0, len(vertices), 3):
                 new_weight = [float(w) for w in rows[w_idx].split(":")[1].strip().split(" ")][indice_row_index]
                 rows[r_idx] = rows[r_idx].rstrip() + " " + str(new_indice)
                 rows[w_idx] = rows[w_idx].rstrip() + " " + str(new_weight)
-            
+
         v1_x = vertices[faces[triidx] * 3] if faces[triidx] * 3 < len(vertices) else new_vertices[faces[triidx] * 3 - len(vertices)]
         v1_y = vertices[faces[triidx] * 3 + 1] if faces[triidx] * 3 < len(vertices) else new_vertices[faces[triidx] * 3 - len(vertices) + 1]
         v1_z = vertices[faces[triidx] * 3 + 2] if faces[triidx] * 3 < len(vertices) else new_vertices[faces[triidx] * 3 - len(vertices) + 2]
@@ -102,20 +103,23 @@ for i_idx in range(0, len(vertices), 3):
         edge1 = vector(v1_x - v2_x, v1_y - v2_y, v1_z - v2_z)
         edge2 = vector(v2_x - v3_x, v2_y - v3_y, v2_z - v3_z)
         c = cross(edge1, edge2)
-
+        included_tri_nor_sum = add(included_tri_nor_sum, normalize(c))
+    
+    ver_nor = normalize(included_tri_nor_sum)
+    for j in range(len(included_tri_idx)):
         if j == 0:
-            normals.append(normalize(c).x)
-            normals.append(normalize(c).y)
-            normals.append(normalize(c).z)
+            normals.append(ver_nor.x)
+            normals.append(ver_nor.y)
+            normals.append(ver_nor.z)
         else: 
-            new_normals.append(normalize(c).x)
-            new_normals.append(normalize(c).y)
-            new_normals.append(normalize(c).z)
+            new_normals.append(ver_nor.x)
+            new_normals.append(ver_nor.y)
+            new_normals.append(ver_nor.z)
 
 rows[v_idx] = rows[v_idx].rstrip() + " " + " ".join([str(v) for v in new_vertices])
 rows[n_idx] = rows[n_idx].split(":")[0] + ": " + " ".join([str(n) for n in normals]) + " " + " ".join([str(n) for n in new_normals])
 rows[f_idx] = rows[f_idx].split(":")[0] + ": " + " ".join([str(f) for f in faces])
 
-new_file = open(FILE_DIRECTORY + FILE_NAME.split(".")[0] + "_flatnormal.sce", "w+")
+new_file = open(FILE_DIRECTORY + FILE_NAME.split(".")[0] + "_separate.sce", "w+")
 new_file.writelines("\n".join(rows) + "\n")
 new_file.close()

@@ -1,9 +1,9 @@
 import math
 from statistics import mean
 
-FILE_NAMES = ["console.obj"]
+FILE_NAMES = ["MOD_tanktop.obj"]
 # FILE_NAMES = ["male.obj"]
-FILE_DIRECTORY = "/Users/nazimaniltepe/Downloads/"
+FILE_DIRECTORY = "/Users/nazimaniltepe/Documents/3D Models/"
 # FILE_DIRECTORY = "/Users/nazimaniltepe/Documents/Projects/PythonScripts/obj/" 
 MAX_Y_FOR_SCALE = 1.0
 
