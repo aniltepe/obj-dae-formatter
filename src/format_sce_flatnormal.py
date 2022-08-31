@@ -43,6 +43,29 @@ new_normals = []
 
 total = 0
 
+# sce'deki bütün indice property'leri listelenir
+indice_idxs = [r for r in range(len(rows)) if rows[r].strip().startswith("i: ")]
+# ilgili objenin altındaki alt objenin joint'leri listeden çıkartılır
+for h in range(len(indice_idxs) - 1, -1, -1):
+    temp_idx = indice_idxs[h]
+    closures = []
+    # indice property'si olan satırda üste doğru gidilerek ait olduğu obje bulunur
+    # eğer satırdan yukarı doğru çıkarken bulunan objenin kapanma tag'ına denk gelinmişse yukarı çıkmaya devam edilir
+    while not rows[temp_idx].strip().startswith("type: 1"):
+        temp_idx -= 1
+        if rows[temp_idx].strip().startswith("/"):
+            closures.append(rows[temp_idx].strip()[1:])
+        if rows[temp_idx].strip().startswith("type: 1"):
+            temp1_idx = temp_idx
+            while ":" in rows[temp1_idx]:
+                temp1_idx -= 1
+            if rows[temp1_idx].strip() in closures:
+                temp_idx -= 1
+    while ":" in rows[temp_idx]:
+        temp_idx -= 1
+    if OBJECT_NAME != rows[temp_idx].strip():
+        indice_idxs.remove(indice_idxs[h])
+
 for i_idx in range(0, len(vertices), 3):
     i = int(i_idx / 3)
     included_tri_idx = [int(t / 3) for t in range(0, len(faces), 3) if faces[t] == i or faces[t + 1] == i or faces[t + 2] == i]
@@ -61,19 +84,6 @@ for i_idx in range(0, len(vertices), 3):
                 faces[triidx + 1] = new_indice
             elif faces[triidx + 2] == i:
                 faces[triidx + 2] = new_indice
-            
-            # sce'deki bütün indice property'leri listelenir
-            indice_idxs = [r for r in range(len(rows)) if rows[r].strip().startswith("i: ")]
-
-            # ilgili objenin altıdaki alt objenin joint'leri listeden çıkartılır
-            for h in range(len(indice_idxs) - 1, -1, -1):
-                temp_idx = indice_idxs[h]
-                while not rows[temp_idx].strip().startswith("type: 1"):
-                    temp_idx -= 1
-                while ":" in rows[temp_idx]:
-                    temp_idx -= 1
-                if OBJECT_NAME != rows[temp_idx].strip():
-                    indice_idxs.remove(indice_idxs[h])
 
             # ilgili vertice'e etkileyen indice property'leri filtrelenir
             included_indice_idx = [r for r in indice_idxs if str(i) in rows[r].split(":")[1].strip().split(" ")]
