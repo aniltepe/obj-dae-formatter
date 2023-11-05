@@ -7,6 +7,6 @@ if obj.mode == 'EDIT':
     for v in bm.verts:
         if v.select:
             print(v.index, v.co)
-    # for v in bm.faces:
-    #     if v.select:
-    #         print(v.index)
+    for v in bm.faces:
+        if v.select:
+            print(v.index, v.verts[0].index, v.verts[1].index, v.verts[2].index)
