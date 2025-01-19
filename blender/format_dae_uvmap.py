@@ -1,3 +1,6 @@
+# blender'a .dae import edildikten sonra çalıştırılmalıdır, aksi halde triangle vertex index'leri yanlış görünecektir (blender vertex'leri reindex'liyor)
+# .obj import edildikten sonra çalıştırıldığında triangle vertex index'ler farklı çıkıyor ama hem .dae hem .obj için triangle index'in kendisinde bir sorun yok
+
 import bpy
 import bmesh
 
